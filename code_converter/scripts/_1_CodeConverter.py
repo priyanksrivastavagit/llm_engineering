@@ -236,7 +236,6 @@ class CodeConverter:
         try:
           cmd = ["clang++", "-O3", "-std=c++17", "-march=nocona", "-o", "optimized", filename]
           p = subprocess.run(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, universal_newlines=True)
-          print(p.stdout)
 
           p1 = subprocess.run("./optimized", stdout=subprocess.PIPE, stdin=subprocess.PIPE, universal_newlines=True)
 
