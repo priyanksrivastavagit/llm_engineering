@@ -24,11 +24,11 @@
 
 ### 🔧 Gradio Web UI
 
-![UI Screenshot](file/Users/priyanksrivastava/Desktop/gradio-screenshot.png)
+![UI Screenshot](screenshots/gradio-screenshot.png)
 
 ### ⚙️ Example Output Comparison
 
-![Comparison Screenshot](file/Users/priyanksrivastava/Desktop/execution-details.png)
+![Comparison Screenshot](screenshots/execution-details.png)
 
 ---
 
