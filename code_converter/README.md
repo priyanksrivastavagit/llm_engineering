@@ -37,10 +37,12 @@ $${\color{lightyellow}Code \space once \space -> \space Run \space fast \space a
 
 ```bash
 .
-├── code_converter.py     # Main app
-├── .env                  # Your API Keys
-├── README.md             # This file
-└── requirements.txt      # Python dependencies
+├── code_converter                    # Main app
+|   ├── screenshots                   # Output screenshots folder
+|   ├── scripts                       # Script folder
+├── .env                              # Your API Keys
+├── README.md                         # This file
+└── requirements.txt                  # Python dependencies
 ```
 
 ---
