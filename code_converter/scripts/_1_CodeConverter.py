@@ -10,7 +10,7 @@ import gradio as gr
 from loguru import logger
 
 # Load environment variables
-load_dotenv("../.env")
+load_dotenv(f"{os.path.dirname(os.path.realpath(__file__))}/../.env")
 
 # Load Models
 #openai_api_key = os.getenv('OPENAI_API_KEY')
