@@ -1,5 +1,4 @@
-# <center>📦 TransCodeX</center> 
-$${\color{lightyellow}Code \space once \space, \space Run \space fast \space anywhere}$$
+# <center>📦 TransCodeX</center> $${\color{lightyellow}Code \space once \space -> \space Run \space fast \space anywhere}$$
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4-informational)
@@ -25,11 +24,11 @@ $${\color{lightyellow}Code \space once \space, \space Run \space fast \space any
 
 ### 🔧 Gradio Web UI
 
-![UI Screenshot](https://user-images.githubusercontent.com/your-username/codeconverter-ui.png)
+![UI Screenshot](file/Users/priyanksrivastava/Desktop/gradio-screenshot.png)
 
 ### ⚙️ Example Output Comparison
 
-![Comparison Screenshot](https://user-images.githubusercontent.com/your-username/codeconverter-compare.png)
+![Comparison Screenshot](file/Users/priyanksrivastava/Desktop/execution-details.png)
 
 ---
 

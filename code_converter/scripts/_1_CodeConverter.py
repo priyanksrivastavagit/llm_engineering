@@ -8,14 +8,12 @@ from IPython.display import Markdown, display, update_display
 import subprocess
 import gradio as gr
 from loguru import logger
-from pathlib import Path
 
 # Load environment variables
-load_dotenv("../.env")
+load_dotenv()
 
 # Load Models
 openai_api_key = os.getenv('OPENAI_API_KEY')
-claude_api_key = os.getenv('CLAUDE_API_KEY')
 CLAUDE_MODEL = os.getenv('CLAUDE_MODEL')
 OPENAI_MODEL = os.getenv('OPENAI_MODEL')
 
@@ -110,7 +108,7 @@ class CodeConverter:
         
       def write_output_java(java):
 
-        logger.info(f"Creating a new Java file: {os.getcwd()}/optimized_output.java")
+        logger.info(f"Creating a new Rust file: {os.getcwd()}/optimized_output.java")
         java_cleansed = java.replace("```java", "").replace("```", "")
         with open(f"{os.getcwd()}/optimized_output.java", "w") as f:
           f.write(java_cleansed)
@@ -119,24 +117,12 @@ class CodeConverter:
       
       def write_output_go(go):
 
-        logger.info(f"Creating a new Go file: {os.getcwd()}/optimized_output.go")
+        logger.info(f"Creating a new Rust file: {os.getcwd()}/optimized_output.go")
         go_cleansed = go.replace("```go", "").replace("```", "")
         with open(f"{os.getcwd()}/optimized_output.go", "w") as f:
           f.write(go_cleansed)
 
           return go_cleansed
-
-      def del_temp_file():
-
-        try:
-          for p in Path(".").glob("optimized_output.*"):
-            p.unlink()
-
-        except Exception as e:
-          logger.error(e)
-          raise
-
-        return
         
       def output_gpt(python, target_lang):
 
@@ -165,31 +151,25 @@ class CodeConverter:
       def output_claude(python, target_lang):
 
         logger.info(f"Code conversion from python to {target_lang} conversion using CLAUDE.")
-        try:
-          result = claude.messages.stream(
-              model=CLAUDE_MODEL,
-              max_tokens=2000,
-              system=system_message(target_lang),
-              messages=[{"role": "user", "content": user_prompt_for(python, target_lang)}],
-          )
+        result = claude.messages.stream(
+            model=CLAUDE_MODEL,
+            max_tokens=2000,
+            system=system_message,
+            messages=[{"role": "user", "content": user_prompt_for(python)}],
+        )
+        reply = ""
+        with result as stream:
+            for text in stream.text_stream:
+                reply += text
 
-          reply = ""
-          with result as stream:
-              for text in stream.text_stream:
-                  reply += text or ""
-
-          if target_lang == "C++":
-            yield write_output_cpp(reply)
-          elif target_lang == "Java":
-            yield write_output_java(reply)
-          elif target_lang == "Rust":
-            yield write_output_rust(reply)
-          elif target_lang == "Go":
-            yield write_output_go(reply)
-
-        except Exception as e:
-          logger.error(str(e))
-          raise
+        if target_lang == "C++":
+          yield write_output_cpp(reply)
+        elif target_lang == "Java":
+          yield write_output_java(reply)
+        elif target_lang == "Rust":
+          yield write_output_rust(reply)
+        elif target_lang == "Go":
+          yield write_output_go(reply)
 
       def execute_python(python):
 
@@ -223,7 +203,7 @@ class CodeConverter:
           p = subprocess.run(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, universal_newlines=True)
 
           if p.stderr != "" and p.stderr is not None:
-            logger.error(p.stderr)
+            print(p.stderr)
             exit(1)
 
         except Exception as e:
@@ -256,7 +236,7 @@ class CodeConverter:
         try:
           cmd = ["clang++", "-O3", "-std=c++17", "-march=nocona", "-o", "optimized", filename]
           p = subprocess.run(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE, universal_newlines=True)
-          logger.info(p.stdout)
+          print(p.stdout)
 
           p1 = subprocess.run("./optimized", stdout=subprocess.PIPE, stdin=subprocess.PIPE, universal_newlines=True)
 
@@ -275,7 +255,7 @@ class CodeConverter:
                 for partial in output_gpt(python_code, target_language):
                     return partial
             elif model == "Claude":
-                for partial in output_claude(python_code, target_language):
+                for partial in output_gpt(python_code, target_language):
                     return partial
         
         except Exception as e:
@@ -301,7 +281,6 @@ class CodeConverter:
 
       def execute_conv_code(converted_lang):
           value = converted_lang
-          logger.info(f"Executing the {value} code.")
           if value == "Java":
               return execute_java()
           elif value == "C++":
