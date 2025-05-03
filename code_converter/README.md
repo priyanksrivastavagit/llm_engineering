@@ -147,5 +147,3 @@ Each output file is named `optimized_output.*` and is automatically saved.
 Made by [@priyanksrivastavagit](https://github.com/priyanksrivastavagit). Contributions welcome!
 
 ---
-
-> "Empowering developers with AI to write faster, safer, and better code."
