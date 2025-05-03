@@ -1,4 +1,4 @@
-# 📦 TransCodeX $${\color{lightorange}_Code once -> Run fast anywhere_}
+# <center>📦 TransCodeX</center> $${\color{lightyellow}Code \space once \space -> \space Run \space fast \space anywhere}$$
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4-informational)
